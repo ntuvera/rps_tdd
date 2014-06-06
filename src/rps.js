@@ -64,14 +64,28 @@ function Game(){
 
 Game.prototype.startGame = function(playerA, playerB){
   this.gameOver = false;
-  this.playerA  = playerA;
-  this.playerB  = playerB;
+  this.playerA  = new Player(playerA);
+  this.playerB  = new Player(playerB);
+
 }
 
 
-// if Player.victoryCount ==3
+// inside player A div, onclick $(class button).id = moveA
 
-// gameOver true
+$(function(){
 
-// startGame false
+game = new Game()
 
+game.startGame()
+
+$('.buttonA').click(function(e){
+moveA = $(this).attr('id');
+playerA= $(this).parent().attr('id');
+})
+
+$('.buttonB').click(function(e){
+moveB = $(this).attr('id');
+playerB= $(this).parent().attr('id');
+})
+
+})
