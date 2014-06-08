@@ -21,8 +21,15 @@ Player.prototype.pickMove = function(move){
 
 Player.prototype.winBattle = function(){
   this.victoryCount += 1;
-
+  // $('#results').text(this.Player +' wins') use for rock crushes scissors/paper covers rrock
+  var score = this.victoryCount.toString();
+  var $scoreDisplay = $('#' + this.name + 'Score');
+  $scoreDisplay.text("Wins: " + score)
 }
+
+// Player.prototype.displayScore = function(){
+
+// }
 
 Player.prototype.winWar = function(){
   var winner = $('<h1>').html(this.name + ' wins!');
@@ -31,7 +38,10 @@ Player.prototype.winWar = function(){
   }
 
 Player.prototype.resetScore = function(){
-    this.victoryCount = 0;
+  this.victoryCount = 0;
+  var score = this.victoryCount;
+  var $scoreDisplay = $('#' + this.name + 'Score');
+  $scoreDisplay.text("Wins: " + score);
 }
 
 
@@ -74,8 +84,8 @@ Game.prototype.startGame = function(playerA, playerB){
 // when two buttons clicked, start game   button.on('click')&&button2.on('click'))
 $(function(){
 
-playerA = new Player($('#playerA').text());
-playerB = new Player($('#playerB').text());
+playerA = new Player($('#playerA').attr('id'));
+playerB = new Player($('#playerB').attr('id'));
 
   $('.buttonA').click(function(e){
     moveA = $(this).attr('id');
@@ -89,9 +99,11 @@ playerB = new Player($('#playerB').text());
 
     if (doesBeat(moveA, moveB)){
       playerA.winBattle();
+      playerB.resetScore();
     }
     else if (doesBeat(moveB, moveA)){
       playerB.winBattle();
+      playerA.resetScore();
     }
     else{
       playerA.resetScore();
