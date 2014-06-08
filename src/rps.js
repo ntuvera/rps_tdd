@@ -28,6 +28,7 @@ Player.prototype.winWar = function(){
   // return this.victoryCount == 3;
   var winner = $('<h1>').html(this.name + ' wins!');
     $('#results').append(winner);
+
   }
 
 Player.prototype.tieLose = function(){
@@ -74,8 +75,8 @@ Game.prototype.startGame = function(playerA, playerB){
 // when two buttons clicked, start game   button.on('click')&&button2.on('click'))
 $(function(){
 
-playerA = new Player($('#playerA').attr('id'))
-playerB = new Player($('#playerB').attr('id'))
+playerA = new Player($('#playerA').text());
+playerB = new Player($('#playerB').text());
 
   $('.buttonA').click(function(e){
     moveA = $(this).attr('id');
@@ -101,7 +102,9 @@ playerB = new Player($('#playerB').attr('id'))
     if(playerA.victoryCount == 3){
       playerA.winWar();
     }
-
+    if(playerB.victoryCount == 3){
+      playerB.winWar();
+    }
   })
 
 // if(this.player.victoryCount == 3){
