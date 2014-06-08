@@ -1,25 +1,3 @@
-// function doesBeat(moveA, moveB) {
-//   if (moveA == 'paper' && moveB == 'rock'){
-//     return true;
-//   }
-//   if (moveA == 'rock' && moveB == 'scissors'){
-//     return true;
-//   }
-//   if (moveA == 'scissors' && moveB == 'paper'){
-//     return true;
-//   }
-//   if (moveA == 'rock' && moveB =='paper'){
-//     return false;
-//   }
-// }
-
-// rockWin =[scissors]
-// paperWin=[rock]
-// scissorsWin=[paper]
-
-
-
-// return victory[moveA] = moveB
 
 function doesBeat(moveA, moveB){
 victory = {rock: 'scissors', paper: 'rock', scissors: 'paper'};
@@ -30,7 +8,6 @@ return victory[moveA] == moveB
 function doesTie(moveA, moveB){
  return moveA == moveB;
 }
-
 
 
 function Player(name){
@@ -44,12 +21,15 @@ Player.prototype.pickMove = function(move){
 
 Player.prototype.winBattle = function(){
   this.victoryCount += 1;
+  if(this.victoryCount == 3){
+    console.log('Someone Won!');
+  }
 }
 
-Player.prototype.winWar = function(){
-  return this.victoryCount == 3;
+// Player.prototype.winWar = function(){
+//   return this.victoryCount == 3;
 
-  }
+//   }
 
 Player.prototype.tieLose = function(){
     this.victoryCount = 0;
@@ -66,26 +46,64 @@ Game.prototype.startGame = function(playerA, playerB){
   this.gameOver = false;
   this.playerA  = new Player(playerA);
   this.playerB  = new Player(playerB);
-
 }
 
 
-// inside player A div, onclick $(class button).id = moveA
 
+// $(function(){
+
+// game = new Game()
+
+// game.startGame()
+
+// $('.buttonA').click(function(e){
+//   moveA   = $(this).attr('id');
+//   playerA = $(this).parent().attr('id');
+//   playerA = new Player(playerA)
+// })
+
+// $('.buttonB').click(function(e){
+//   moveB   = $(this).attr('id');
+//   playerB = $(this).parent().attr('id');
+//   playerB = new Player(playerB)
+// })
+
+// })
+
+// on button click run startGame function
+// game start requires player choices
+// when two buttons clicked, start game   button.on('click')&&button2.on('click'))
 $(function(){
 
-game = new Game()
+  $('.buttonA').click(function(e){
+    moveA = $(this).attr('id');
+    // playerA= $(this).parent().attr('id');
+    playerA = new Player(playerA)
+  })
 
-game.startGame()
+  $('.buttonB').click(function(e){
+    moveB = $(this).attr('id');
+    // playerB= $(this).parent().attr('id');
+    playerB = new Player(playerB)
+  })
 
-$('.buttonA').click(function(e){
-moveA = $(this).attr('id');
-playerA= $(this).parent().attr('id');
-})
+  $('.buttonStart').click(function(e){
+    // Game.startGame();
 
-$('.buttonB').click(function(e){
-moveB = $(this).attr('id');
-playerB= $(this).parent().attr('id');
-})
+    if (doesBeat(moveA, moveB)){
+      playerA.winBattle();
+    }
+    else if (doesBeat(moveB, moveA)){
+      playerB.winBattle();
+    }
+    else{
+      Game.startGame();
+    }
+
+
+
+  })
+
+
 
 })
