@@ -34,6 +34,8 @@ Player.prototype.winBattle = function(){
 Player.prototype.winWar = function(){
   var winner = $('<h1>').html(this.name + ' wins!');
     $('#results').append(winner);
+    document.getElementById('buttonStart').disabled=true;
+    window.alert("Please Start a new game");
   return this.victoryCount == 3;
   }
 
@@ -46,18 +48,26 @@ Player.prototype.resetScore = function(){
 
 
 function Game(){
-  this.playerA  = undefined;
-  this.playerB  = undefined;
-  this.gameOver = true;
+  var playerA  = new Player(playerA);
+  var playerB  = new Player(playerB);
+  this.gameOver = false;
 }
+
 
 Game.prototype.startGame = function(playerA, playerB){
-  this.gameOver = false;
-  this.playerA  = new Player(playerA);
-  this.playerB  = new Player(playerB);
+  var playerA  = new Player(playerA);
+  var playerB  = new Player(playerB);
+
+
+    // $('#results').append($('<h1>').text('Please Start New Game'));
+    // $(document).getElementById('buttonStart');
+
 }
 
+Game.prototype.endGame = function(playerA, playerB){
+  this.gameOver = true
 
+}
 
 // $(function(){
 
@@ -83,7 +93,11 @@ Game.prototype.startGame = function(playerA, playerB){
 // game start requires player choices
 // when two buttons clicked, start game   button.on('click')&&button2.on('click'))
 $(function(){
+game = new Game();
 
+  $('#newGame').click(function(e){
+  game.startGame();
+  })
 playerA = new Player($('#playerA').attr('id'));
 playerB = new Player($('#playerB').attr('id'));
 
@@ -112,9 +126,11 @@ playerB = new Player($('#playerB').attr('id'));
 
     if(playerA.victoryCount == 3){
       playerA.winWar();
+      game.endGame();
     }
     if(playerB.victoryCount == 3){
       playerB.winWar();
+      game.endGame();
     }
   })
 
