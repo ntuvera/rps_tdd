@@ -25,13 +25,12 @@ Player.prototype.winBattle = function(){
 }
 
 Player.prototype.winWar = function(){
-  // return this.victoryCount == 3;
   var winner = $('<h1>').html(this.name + ' wins!');
     $('#results').append(winner);
-
+  return this.victoryCount == 3;
   }
 
-Player.prototype.tieLose = function(){
+Player.prototype.resetScore = function(){
     this.victoryCount = 0;
 }
 
@@ -95,8 +94,8 @@ playerB = new Player($('#playerB').text());
       playerB.winBattle();
     }
     else{
-      playerA.tieLose();
-      playerB.tieLose();
+      playerA.resetScore();
+      playerB.resetScore();
     }
 
     if(playerA.victoryCount == 3){
@@ -106,10 +105,5 @@ playerB = new Player($('#playerB').text());
       playerB.winWar();
     }
   })
-
-// if(this.player.victoryCount == 3){
-//   this.player.winWar();
-// }
-
 
 })
