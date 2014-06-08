@@ -11,8 +11,8 @@ function doesTie(moveA, moveB){
 
 
 function Player(name){
-  this.name         = name
-  this.victoryCount = 0
+  this.name         = name;
+  this.victoryCount = 0;
 }
 
 Player.prototype.pickMove = function(move){
@@ -21,15 +21,17 @@ Player.prototype.pickMove = function(move){
 
 Player.prototype.winBattle = function(){
   this.victoryCount += 1;
-  if(this.victoryCount == 3){
-    console.log('Someone Won!');
-  }
+
 }
 
-// Player.prototype.winWar = function(){
-//   return this.victoryCount == 3;
+Player.prototype.winWar = function(){
+  var that = this;
+  // return this.victoryCount == 3;
+  if(this.victoryCount == 3){
+    $('#results').text(Player.name + ' wins');
+  }
 
-//   }
+  }
 
 Player.prototype.tieLose = function(){
     this.victoryCount = 0;
@@ -59,13 +61,13 @@ Game.prototype.startGame = function(playerA, playerB){
 // $('.buttonA').click(function(e){
 //   moveA   = $(this).attr('id');
 //   playerA = $(this).parent().attr('id');
-//   playerA = new Player(playerA)
+
 // })
 
 // $('.buttonB').click(function(e){
 //   moveB   = $(this).attr('id');
 //   playerB = $(this).parent().attr('id');
-//   playerB = new Player(playerB)
+
 // })
 
 // })
@@ -75,20 +77,18 @@ Game.prototype.startGame = function(playerA, playerB){
 // when two buttons clicked, start game   button.on('click')&&button2.on('click'))
 $(function(){
 
+playerA = new Player(playerA)
+playerB = new Player(playerB)
+
   $('.buttonA').click(function(e){
     moveA = $(this).attr('id');
-    // playerA= $(this).parent().attr('id');
-    playerA = new Player(playerA)
   })
 
   $('.buttonB').click(function(e){
     moveB = $(this).attr('id');
-    // playerB= $(this).parent().attr('id');
-    playerB = new Player(playerB)
   })
 
   $('.buttonStart').click(function(e){
-    // Game.startGame();
 
     if (doesBeat(moveA, moveB)){
       playerA.winBattle();
@@ -97,10 +97,13 @@ $(function(){
       playerB.winBattle();
     }
     else{
-      Game.startGame();
+      playerA.tieLose();
+      playerB.tieLose();
     }
 
-
+    if(playerA.victoryCount == 3){
+      playerA.winWar();
+    }
 
   })
 
