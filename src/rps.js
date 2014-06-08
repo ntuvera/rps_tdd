@@ -1,7 +1,7 @@
 
 function doesBeat(moveA, moveB){
 victory = {rock: 'scissors', paper: 'rock', scissors: 'paper'};
-return victory[moveA] == moveB
+return victory[moveA] == moveB;
 
 }
 
@@ -16,7 +16,11 @@ function Player(name){
 }
 
 Player.prototype.pickMove = function(move){
-  this.move = move;
+  if (game.gameOver == false){
+    this.move = move;
+  }else{
+    $('#results').html("Please start a game beore picking a move");
+  }
 }
 
 Player.prototype.winBattle = function(){
@@ -24,7 +28,8 @@ Player.prototype.winBattle = function(){
   // $('#results').text(this.Player +' wins') use for rock crushes scissors/paper covers rrock
   var score = this.victoryCount.toString();
   var $scoreDisplay = $('#' + this.name + 'Score');
-  $scoreDisplay.text("Wins: " + score)
+  $scoreDisplay.text("Wins: " + score);
+  $('#results').html(this.name + "wins")
 }
 
 // Player.prototype.displayScore = function(){
@@ -55,18 +60,15 @@ function Game(){
 
 
 Game.prototype.startGame = function(playerA, playerB){
+  this.gameOver= false;
   var playerA  = new Player(playerA);
   var playerB  = new Player(playerB);
-
-
-    // $('#results').append($('<h1>').text('Please Start New Game'));
-    // $(document).getElementById('buttonStart');
-
+  playerA.resetScore();
+  playerB.resetScore();
 }
 
 Game.prototype.endGame = function(playerA, playerB){
   this.gameOver = true
-
 }
 
 // $(function(){
@@ -92,14 +94,22 @@ Game.prototype.endGame = function(playerA, playerB){
 // on button click run startGame function
 // game start requires player choices
 // when two buttons clicked, start game   button.on('click')&&button2.on('click'))
-$(function(){
-game = new Game();
 
-  $('#newGame').click(function(e){
-  game.startGame();
-  })
+
+
+$( document ).ready(function(){
+
+game = new Game();
 playerA = new Player($('#playerA').attr('id'));
 playerB = new Player($('#playerB').attr('id'));
+
+
+  $('.newGame').click(function(e){
+  playerA.resetScore();
+  playerB.resetScore();
+  document.getElementById('buttonStart').disabled=false;
+  // game.startGame();
+  })
 
   $('.buttonA').click(function(e){
     moveA = $(this).attr('id');
@@ -122,6 +132,7 @@ playerB = new Player($('#playerB').attr('id'));
     else{
       playerA.resetScore();
       playerB.resetScore();
+      $('#results').text("Draw");
     }
 
     if(playerA.victoryCount == 3){
