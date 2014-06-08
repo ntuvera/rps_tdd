@@ -1,5 +1,5 @@
-button{
-
+button {
+  zoom:1.5;
 }
 
 .player {
@@ -8,6 +8,12 @@ button{
   width: 300px;
   display:inline-block;
 }
+
+
+/*.game {
+  text-align: center;
+}
+*/
 
 /*#a{
   float:left;
